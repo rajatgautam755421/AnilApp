@@ -29,4 +29,36 @@ const createTeacher = async (req, res) => {
   }
 };
 
-module.exports = { createTeacher };
+const getAlleachers = async (rea, res) => {
+  try {
+    const response = await Teacher.find({});
+
+    res.json({ success: true, message: response });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const deleteTeacher = async (req, res) => {
+  try {
+    const response = await Teacher.findByIdAndRemove({ _id: req.params.id });
+    res.json({ success: true, message: response });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const updateTeacher = async (req, res) => {
+  try {
+    const response = await Teacher.findByIdAndUpdate(
+      { _id: req.params.id },
+      { ...req.body },
+      { new: true }
+    );
+    res.json({ success: true, message: response });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { createTeacher, deleteTeacher, updateTeacher, getAlleachers };
